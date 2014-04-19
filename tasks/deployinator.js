@@ -6,9 +6,10 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
-
 module.exports = function(grunt) {
+    var exec = require('child_process').exec,
+        version = require('../lib/version.js');
+    
     grunt.registerMultiTask('deployinator', 'Grunt plugin that deploys git repositories on remote servers.', function() {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options();
@@ -17,8 +18,7 @@ module.exports = function(grunt) {
             grunt.fail.fatal('Please sepecify a host and directory.');
         }
         
-        var exec = require('child_process').exec,
-            done = this.async(),
+        var done = this.async(),
             host =  options.host,
             directory =  options.directory;
             
@@ -54,47 +54,15 @@ module.exports = function(grunt) {
         }
         
         function tagVersion(lastTag) {
-            var currentTag = getNextTag(lastTag);
+            var currentTag = version.getNextTag(lastTag);
             
-            exec('git tag ' + currentTag, function (error/*, stdout, stderr*/) {
-                if (error) {
-                    throw error;
-                }
-                
+            version.createTag(currentTag, function () {
                 pushTags(function () {
                     checkoutVersion(currentTag);
                 });
             });
         }
-            
-        function getNextTag(lastTag) {
-            var nextTag = lastTag.split('.');
-            
-            nextTag[2] = parseInt(nextTag[2], 10) + 1;
-            nextTag = nextTag.join('.');
-            
-            return nextTag;
-        }
         
-        function fetchLastTag(fn) {
-            exec('git tag -l', function (error, stdout/*, stderr*/) {
-                if (error) {
-                    throw error;
-                }
-                
-                var tags = String(stdout).split("\n").filter(function (line) {
-                        return !!line;
-                    }).sort(),
-                    lastTag = '0.0.0';
-                
-                if (tags.length) {
-                    lastTag = tags[tags.length - 1];
-                }
-                
-                fn(lastTag);
-            });
-        }
-        
-        fetchLastTag(tagVersion);
+        version.fetchLastTag(tagVersion);
     });
 };
