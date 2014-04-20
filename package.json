@@ -1,42 +1,41 @@
 {
-  "name": "grunt-deployinator",
-  "description": "Grunt plugin that deploys git repositories on remote servers.",
-  "version": "0.1.0",
-  "homepage": "https://github.com/istvan-antal/grunt-deployinator",
-  "author": {
-    "name": "István Miklós Antal",
-    "email": "istvan.m.antal@gmail.com",
-    "url": "http://istvan-antal.ro/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:istvan-antal/grunt-deployinator.git"
-  },
-  "bugs": {
-    "url": "https://github.com/istvan-antal/grunt-deployinator/issues"
-  },
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "https://github.com/istvan-antal/grunt-deployinator/blob/master/LICENSE-MIT"
-    }
-  ],
-  "engines": {
-    "node": ">= 0.8.0"
-  },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "devDependencies": {
-    "grunt-contrib-jshint": "^0.9.2",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-nodeunit": "^0.3.3",
-    "grunt": "~0.4.4"
-  },
-  "peerDependencies": {
-    "grunt": "~0.4.4"
-  },
-  "keywords": [
-    "gruntplugin"
-  ]
+    "name": "grunt-deployinator",
+    "description": "Grunt plugin that deploys git repositories on remote servers.",
+    "version": "0.1.0",
+    "homepage": "https://github.com/istvan-antal/grunt-deployinator",
+    "author": {
+        "name": "István Miklós Antal",
+        "email": "istvan.m.antal@gmail.com",
+        "url": "http://istvan-antal.ro/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:istvan-antal/grunt-deployinator.git"
+    },
+    "bugs": {
+        "url": "https://github.com/istvan-antal/grunt-deployinator/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/istvan-antal/grunt-deployinator/blob/master/LICENSE-MIT"
+        }
+    ],
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "devDependencies": {
+        "grunt-contrib-jshint": "^0.9.2",
+        "grunt-contrib-nodeunit": "^0.3.3",
+        "grunt": "~0.4.4"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.4"
+    },
+    "keywords": [
+        "gruntplugin"
+    ]
 }

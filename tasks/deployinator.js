@@ -10,7 +10,8 @@ module.exports = function(grunt) {
     var exec = require('child_process').exec,
         version = require('../lib/version.js');
     
-    grunt.registerMultiTask('deployinator', 'Grunt plugin that deploys git repositories on remote servers.', function() {
+    grunt.registerMultiTask('deployinator',
+        'Grunt plugin that deploys git repositories on remote servers.', function() {
         // Merge task-specific and/or target-specific options with these defaults.
         var options = this.options();
         
