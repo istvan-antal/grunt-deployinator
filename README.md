@@ -22,6 +22,8 @@ grunt.loadNpmTasks('grunt-deployinator');
 ### Overview
 In your project's Gruntfile, add a section named `deployinator` to the data object passed into `grunt.initConfig()`.
 
+Pull to deploy configuration:
+
 ```js
 grunt.initConfig({
     deployinator: {
