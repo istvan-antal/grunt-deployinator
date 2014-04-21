@@ -1,4 +1,4 @@
-# grunt-deployinator
+# grunt-deployinator [![Build Status](https://travis-ci.org/istvan-antal/grunt-deployinator.png?branch=master)](https://travis-ci.org/istvan-antal/grunt-deployinator)
 
 > Grunt plugin that deploys git repositories on remote servers.
 
