@@ -41,7 +41,8 @@ module.exports = function (grunt) {
             exports: true,
             grunt: true,
             describe: true,
-            it: true
+            it: true,
+            expect: true
         }
     };
     
@@ -76,7 +77,8 @@ module.exports = function (grunt) {
         mochaTest: {
             all: {
                 options: {
-                    reporter: 'spec'
+                    reporter: 'spec',
+                    require: './testHelper.js'
                 },
                 src: ['coverage/spec/*.js']
             }
