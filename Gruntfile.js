@@ -39,7 +39,9 @@ module.exports = function (grunt) {
             module: true,
             require: true,
             exports: true,
-            grunt: true
+            grunt: true,
+            describe: true,
+            it: true
         }
     };
     
@@ -49,36 +51,77 @@ module.exports = function (grunt) {
             all: [
                 'Gruntfile.js',
                 'tasks/*.js',
-                '<%= nodeunit.tests %>',
+                'spec/*.js'
             ],
             options: jsHintOptions,
         },
-        nodeunit: {
-            tests: ['test/*_test.js'],
+        clean: {
+            coverage: {
+                src: ['coverage/']
+            }
+        },
+        copy: {
+            coverage: {
+                src: ['spec/**'],
+                dest: 'coverage/'
+            }
+        },
+        instrument: {
+            files: 'lib/*.js',
+            options: {
+                lazy: true,
+                basePath: 'coverage/'
+            }
         },
         mochaTest: {
-            unit: {
+            all: {
                 options: {
                     reporter: 'spec'
                 },
-                src: ['spec/*.js']
+                src: ['coverage/spec/*.js']
+            }
+        },
+        storeCoverage: {
+            options: {
+                dir: 'coverage/reports'
+            }
+        },
+        coverage: {
+            options: {
+                thresholds: {
+                    'statements': 100,
+                    'branches': 100,
+                    'lines': 100,
+                    'functions': 100
+                },
+                dir: 'coverage/reports',
+                root: '.'
+            }
+        },
+        makeReport: {
+            src: 'coverage/reports/**/*.json',
+            options: {
+                type: 'lcov',
+                dir: 'coverage/reports',
+                print: 'detail'
             }
         }
     });
-
-    // Actually load this plugin's task(s).
+    
     grunt.loadTasks('tasks');
-
-    // These plugins provide necessary tasks.
+    
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
     grunt.loadNpmTasks('grunt-mocha-test');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-istanbul');
+    grunt.loadNpmTasks('grunt-istanbul-coverage');
 
-    // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-    // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['nodeunit', 'mochaTest']);
+    grunt.registerTask('test',
+        ['clean', 'instrument', 'copy', 'mochaTest', 'storeCoverage', 'makeReport', 'coverage']
+    );
+    
     grunt.registerTask('check', ['jshint', 'test']);
-
-    // By default, lint and run all tests.
+    
     grunt.registerTask('default', ['jshint', 'test']);
 };
