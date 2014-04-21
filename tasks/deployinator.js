@@ -7,63 +7,31 @@
  */
 
 module.exports = function(grunt) {
-    var exec = require('child_process').exec,
-        version = require('../lib/version.js');
+    var deployinator = require('../lib/deployinator.js');
     
-    grunt.registerMultiTask('deployinator',
-        'Grunt plugin that deploys git repositories on remote servers.', function() {
-        // Merge task-specific and/or target-specific options with these defaults.
+    grunt.registerMultiTask('deployPull',
+        'SSH into a server and do a pull', function() {
         var options = this.options();
         
         if (!options.host || !options.directory) {
             grunt.fail.fatal('Please sepecify a host and directory.');
         }
         
-        var done = this.async(),
-            host =  options.host,
-            directory =  options.directory;
-            
-        function checkoutVersion(currentTag) {
-            var command = "ssh " + host + " '";
-            
-            command += "cd " + directory + ';';
-            command += "git fetch --tags;";
-            command += "git checkout " + currentTag + ";";
-            command += "npm install;";
-            command += "grunt build";
-            command += "'";
-            
-            exec(command, function (error, stdout/*, stderr*/) {
-                if (error) {
-                    throw error;
-                }
-                
-                grunt.log.writeln(stdout);
-                
-                done();
-            });
-        }
-            
-        function pushTags(fn) {
-            exec('git push --tags', function (error/*, stdout, stderr*/) {
-                if (error) {
-                    throw error;
-                }
-                
-                fn();
-            });
-        }
+        var done = this.async();
         
-        function tagVersion(lastTag) {
-            var currentTag = version.getNextTag(lastTag);
-            
-            version.createTag(currentTag, function () {
-                pushTags(function () {
-                    checkoutVersion(currentTag);
-                });
-            });
-        }
-        
-        version.fetchLastTag(tagVersion);
+        deployinator.deployPull(options).then(function (output) {
+            grunt.log.writeln(output);
+            done();
+        });
     });
+    
+    grunt.registerTask('tagRelease',
+        'Creates a git tag for the release.', function() {
+        
+        var done = this.async();
+        
+        deployinator.tagRelease().then(done);
+    });
+    
+    grunt.registerMultiTask('deployinator', ['deployPull']);
 };
