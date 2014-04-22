@@ -44,6 +44,6 @@
     "gruntplugin"
   ],
   "dependencies": {
-    "promise": "^4.0.0"
+    "promise": "~4.0.0"
   }
 }
