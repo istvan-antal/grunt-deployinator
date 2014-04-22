@@ -48,6 +48,4 @@ module.exports = function(grunt) {
         
         deployinator.tagRelease().then(done);
     });
-    
-    grunt.registerMultiTask('deployinator', ['deployPull']);
 };
