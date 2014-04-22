@@ -22,30 +22,57 @@ grunt.loadNpmTasks('grunt-deployinator');
 ### Overview
 In your project's Gruntfile, add a section named `deployinator` to the data object passed into `grunt.initConfig()`.
 
-Pull to deploy configuration:
+deployPull task:
 
 ```js
 grunt.initConfig({
-    deployinator: {
+    deployPull: {
         app: {
             options: {
                 host: "yourhost",
-                directory: "/opt/location-of-your-repository"
+                directory: "/opt/location-of-your-repository",
+                buildCommands: ["npm install", "grunt build"]
             }
         }
     }
 });
 ```
 
+deployPush task:
+
+```js
+grunt.initConfig({
+    deployPush: {
+        app: {
+            options: {
+                remote: 'deploy master'
+            }
+        }
+    }
+});
+```
+
+tagRelease task will only create a tag for the release.
+
 ### Options
 
-#### options.host
+#### options.host (deployPull)
 
 The ssh host of the production system.
 
-#### options.directory
+#### options.directory (deployPull)
 
 Location of the production source location on the production system.
+
+#### options.remote (deployPush)
+
+Git remote repository to push to.
+
+### Command line options
+
+By default deployinator will increment the last(patch) version number.
+With --release deployinator will increment the second(minor release) number.
+With --majorRelease it will increment the first(major release) number.
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
