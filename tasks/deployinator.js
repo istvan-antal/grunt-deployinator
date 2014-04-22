@@ -12,6 +12,7 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('deployPull',
         'SSH into a server and do a pull', function() {
         var options = this.options();
+        options.increment = getVersionIncrement();
         
         if (!options.host || !options.directory) {
             grunt.fail.fatal('Please sepecify a host and directory.');
@@ -28,6 +29,7 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('deployPush',
         'Push to a server to deploy', function() {
         var options = this.options();
+        options.increment = getVersionIncrement();
         
         if (!options.remote) {
             grunt.fail.fatal('Please sepecify a remote.');
@@ -44,8 +46,23 @@ module.exports = function(grunt) {
     grunt.registerTask('tagRelease',
         'Creates a git tag for the release.', function() {
         
-        var done = this.async();
+        var done = this.async(),
+            options = this.options();
+    
+        options.increment = getVersionIncrement();
         
-        deployinator.tagRelease().then(done);
+        deployinator.tagRelease(options).then(done);
     });
+    
+    function getVersionIncrement() {
+        if (grunt.option('majorRelease')) {
+            return 'major';
+        }
+        
+        if (grunt.option('release')) {
+            return 'minor';
+        }
+        
+        return 'patch';
+    }
 };
