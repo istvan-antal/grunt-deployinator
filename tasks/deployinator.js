@@ -25,6 +25,22 @@ module.exports = function(grunt) {
         });
     });
     
+    grunt.registerMultiTask('deployPush',
+        'Push to a server to deploy', function() {
+        var options = this.options();
+        
+        if (!options.remote) {
+            grunt.fail.fatal('Please sepecify a remote.');
+        }
+        
+        var done = this.async();
+        
+        deployinator.deployPush(options).then(function (output) {
+            grunt.log.writeln(output);
+            done();
+        });
+    });
+    
     grunt.registerTask('tagRelease',
         'Creates a git tag for the release.', function() {
         
