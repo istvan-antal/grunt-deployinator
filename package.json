@@ -45,5 +45,41 @@
     ],
     "dependencies": {
         "promise": "~4.0.0"
+    },
+    "jshintConfig": {
+        "bitwise": true,
+        "curly": true,
+        "camelcase": true,
+        "eqeqeq": true,
+        "freeze": true,
+        "immed": true,
+        "latedef": false,
+        "newcap": true,
+        "noarg": true,
+        "forin": true,
+        "sub": true,
+        "undef": true,
+        "unused": true,
+        "noempty": true,
+        "boss": false,
+        "eqnull": true,
+        "browser": true,
+        "indent": 4,
+        "maxcomplexity": 7,
+        "maxstatements": 36,
+        "maxparams": 5,
+        "maxdepth": 3,
+        "maxlen": 100,
+        "trailing": true,
+        "maxerr": 5,
+        "globals": {
+            "module": true,
+            "require": true,
+            "exports": true,
+            "grunt": true,
+            "describe": true,
+            "it": true,
+            "expect": true
+        }
     }
 }

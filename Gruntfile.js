@@ -7,45 +7,8 @@
  */
 module.exports = function (grunt) {
     'use strict';
-    var jsHintOptions;
-    
-    jsHintOptions = {
-        bitwise: true,
-        curly: true,
-        camelcase: true,
-        eqeqeq: true,
-        freeze: true,
-        immed: true,
-        latedef: true,
-        newcap: true,
-        noarg: true,
-        forin: true,
-        sub: true,
-        undef: true,
-        unused: true,
-        noempty: true,
-        boss: false,
-        eqnull: true,
-        browser: true,
-        indent: 4,
-        maxcomplexity: 7,
-        maxstatements: 36,
-        maxparams: 5,
-        maxdepth: 3,
-        maxlen: 100,
-        trailing: true,
-        maxerr: 5,
-        globals: {
-            module: true,
-            require: true,
-            exports: true,
-            grunt: true,
-            describe: true,
-            it: true,
-            expect: true
-        }
-    };
-    
+    var pkg = grunt.file.readJSON('package.json');
+
     // Project configuration.
     grunt.initConfig({
         jshint: {
@@ -54,7 +17,7 @@ module.exports = function (grunt) {
                 'tasks/*.js',
                 'spec/*.js'
             ],
-            options: jsHintOptions,
+            options: pkg.jshintConfig,
         },
         clean: {
             coverage: {
@@ -109,9 +72,9 @@ module.exports = function (grunt) {
             }
         }
     });
-    
+
     grunt.loadTasks('tasks');
-    
+
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -122,8 +85,8 @@ module.exports = function (grunt) {
     grunt.registerTask('test',
         ['clean', 'instrument', 'copy', 'mochaTest', 'storeCoverage', 'makeReport', 'coverage']
     );
-    
+
     grunt.registerTask('check', ['jshint', 'test']);
-    
+
     grunt.registerTask('default', ['jshint', 'test']);
 };
