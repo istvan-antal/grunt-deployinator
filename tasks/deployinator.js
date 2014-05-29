@@ -37,6 +37,8 @@ module.exports = function(grunt) {
             return deploySetup(options).then(function (output) {
                 grunt.log.writeln(output);
                 done();
+            }, function (error) {
+                grunt.fail.fatal('Error encountered during setup: ' + error);
             });
         }
 
@@ -45,6 +47,8 @@ module.exports = function(grunt) {
         deployinator.deployPull(options).then(function (output) {
             grunt.log.writeln(output);
             done();
+        }, function (error) {
+            grunt.fail.fatal('Error encountered during deploy: ' + error);
         });
     });
 
@@ -62,6 +66,8 @@ module.exports = function(grunt) {
         deployinator.deployPush(options).then(function (output) {
             grunt.log.writeln(output);
             done();
+        }, function (error) {
+            grunt.fail.fatal('Error encountered during deploy: ' + error);
         });
     });
 
@@ -85,7 +91,9 @@ module.exports = function(grunt) {
 
         options.increment = getVersionIncrement();
 
-        deployinator.tagRelease(options).then(done);
+        deployinator.tagRelease(options).then(done, function (error) {
+            grunt.fail.fatal('Error encountered during deploy: ' + error);
+        });
     });
 
     function getVersionIncrement() {
