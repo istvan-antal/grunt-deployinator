@@ -1,4 +1,4 @@
-var command = require('../lib/command.js');
+var command = require('commandjs');
 
 describe('Command utilities', function () {
 
