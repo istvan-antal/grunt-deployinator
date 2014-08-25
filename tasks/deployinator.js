@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
     var deployinator = require('../lib/deployinator.js');
 
     function deploySetup(options) {
@@ -25,7 +25,7 @@ module.exports = function(grunt) {
     }
 
     grunt.registerMultiTask('deployPull',
-        'SSH into a server and do a pull', function() {
+        'SSH into a server and do a pull', function () {
         var options = this.options();
         var done = this.async();
 
@@ -53,7 +53,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerMultiTask('deployPush',
-        'Push to a server to deploy', function() {
+        'Push to a server to deploy', function () {
         var options = this.options();
         options.increment = getVersionIncrement();
 
@@ -72,7 +72,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerMultiTask('npmDeploy',
-        'Publish an NPM module', function() {
+        'Publish an NPM module', function () {
 
         var done = this.async();
 
@@ -84,7 +84,7 @@ module.exports = function(grunt) {
     });
 
     grunt.registerTask('tagRelease',
-        'Creates a git tag for the release.', function() {
+        'Creates a git tag for the release.', function () {
 
         var done = this.async(),
             options = this.options();

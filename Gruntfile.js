@@ -7,7 +7,13 @@
  */
 module.exports = function (grunt) {
     'use strict';
-    var pkg = grunt.file.readJSON('package.json');
+    var pkg = grunt.file.readJSON('package.json'),
+        jsFiles = [
+            'Gruntfile.js',
+            'tasks/*.js',
+            'spec/*.js',
+            'lib/*.js'
+        ];
 
     // Project configuration.
     grunt.initConfig({
@@ -18,6 +24,10 @@ module.exports = function (grunt) {
                 'spec/*.js'
             ],
             options: pkg.jshintConfig,
+        },
+        jscs: {
+            src: jsFiles,
+            options: grunt.file.readJSON('.jscs.json')
         },
         clean: {
             coverage: {
@@ -76,6 +86,7 @@ module.exports = function (grunt) {
     grunt.loadTasks('tasks');
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-jscs');
     grunt.loadNpmTasks('grunt-mocha-test');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-copy');
@@ -86,7 +97,7 @@ module.exports = function (grunt) {
         ['clean', 'instrument', 'copy', 'mochaTest', 'storeCoverage', 'makeReport', 'coverage']
     );
 
-    grunt.registerTask('check', ['jshint', 'test']);
+    grunt.registerTask('check', ['jshint', 'jscs', 'test']);
 
-    grunt.registerTask('default', ['jshint', 'test']);
+    grunt.registerTask('default', ['check']);
 };
